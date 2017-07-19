@@ -19,7 +19,7 @@ instance showMyRecord :: Show MyRecord where
 instance isForeignMyRecord :: IsForeign MyRecord where
 	read = readGeneric $ defaultOptions {unwrapSingleConstructors = true}
 instance asForeignMyRecord :: AsForeign MyRecord where
-	write = toForeigntGeneric $ defaultOptions {unwrapSingleConstructors = true}
+	write = toForeignGeneric $ defaultOptions {unwrapSingleConstructors = true}
 
 toJSONString = write >>> unsafeStringify
 fronJSONString = readJSON >>> runExcept
