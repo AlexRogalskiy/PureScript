@@ -21,9 +21,14 @@ instance isForeignMyRecord :: IsForeign MyRecord where
 instance asForeignMyRecord :: AsForeign MyRecord where
 	write = toForeigntGeneric $ defaultOptions {unwrapSingleConstructors = true}
 
-toJSONString = write >> unsafeStringify
+toJSONString = write >>> unsafeStringify
+fronJSONString = readJSON >>> runExcept
 
 main :: forall e. Eff (console :: CONSOLE | e) Unit
 main = do
   log "Hello sailor!"
   log $ toJSONString (MyRecord {a : 1})
+  log $ show eMyRecord
+  where
+  	eMyRecord :: Either _ MyRecord
+  	eMyRecord = fromJSONString """{"a": 1}"""
